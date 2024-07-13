@@ -1,0 +1,74 @@
+// TWO STACK FROM AN ARRAY
+
+#include <iostream>
+using namespace std;
+
+class Stack{
+  public:
+  int top1;
+  int top2;
+  int size;
+  int *arr;
+
+  Stack (int n)
+  {
+    top1 = -1;
+    top2 = n;
+    size = n;
+    arr = new int[n];
+  }
+
+  void push1(int data)
+  {
+    if(top2-top1 > 1)
+    {
+      top1 = top1 + 1;
+      arr[top1] = data;
+    }
+    else
+    {
+      cout<<"Stack1 Overflow..."<<endl;
+    }
+  }
+
+    void push2(int data)
+{
+  if(top2-top1>1)
+  {
+    top2 = top2 - 1;
+    arr[top2] = data;
+  }
+  else
+  {
+    cout<<"Stack2 Overflow"<<endl;
+  }
+}
+
+  void pop1()
+  {
+    if(top1 == -1) cout<<"No element in Stack1..."<<endl;
+    else top1 = top1-1;
+  }
+
+  void pop2()
+  {
+    if(top2 == size) cout<<"No element in Stack2.."<<endl;
+    else top2 = top2+1;
+  }
+    
+};
+
+
+int main() {
+  Stack st(7);
+
+  st.push1(2);
+  st.push1(3);
+  st.push1(4);
+  st.push1(5);
+  st.push2(6);
+  st.push2(7);
+  st.push2(8);
+  st.push2(11); // Stack2 Overflow
+  return 0;
+}
