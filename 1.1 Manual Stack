@@ -1,0 +1,79 @@
+// MANUAL STACK CREATION...
+
+#include <iostream>
+using namespace std;
+
+class Stack{
+  public:
+  int top;
+  int size;
+  int *arr;
+
+
+  Stack(int n)
+  {
+    top = -1;
+    arr = new int[n];
+    size = n;
+  }
+
+  void push(int data)
+  {
+    if(size - top > 1)
+    {
+      top = top+1;
+      arr[top] = data;
+    }
+    else
+    {
+      cout<<"Stack Overflow..."<<endl;
+    }
+  }
+
+  void pop()
+  {
+    if(top == -1)
+    {
+      cout<<"No data present.."<<endl;
+    }
+    else
+    {
+      top = top-1;
+    }
+  }
+
+  int getSize()
+  {
+    return top+1;
+  }
+
+  int getTop()
+  {
+    if(top==-1) return -1;
+    else return arr[top];
+  }
+
+  bool empty()
+  {
+    if(top == -1) return true;
+    else return false;
+  }
+};
+
+int main() {
+  Stack st(5);
+  st.push(10);
+  cout<<st.getTop()<<endl;
+  st.push(20);
+  st.push(30);
+  st.push(40);
+  st.pop();
+  cout<<st.getTop()<<endl;
+  cout<<st.getSize();
+  cout<<endl<<st.empty();
+  st.pop();
+  st.pop();
+  st.pop();
+  cout<<endl<<st.empty();
+  return 0;
+}
