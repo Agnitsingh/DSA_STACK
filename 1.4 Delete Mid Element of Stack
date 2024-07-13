@@ -1,0 +1,30 @@
+class Solution
+{
+    public:
+    //Function to delete middle element of a stack.
+    
+    void delMid(stack<int> &s, int mid)
+    {
+        if(s.size() == mid)
+        {
+            s.pop();
+            return;
+        }
+        
+        int pos = s.top();
+        s.pop();
+        
+        delMid(s, mid);
+        
+        s.push(pos);
+    }
+    
+    void deleteMid(stack<int>&s, int sizeOfStack)
+    {
+        int mid;
+        if(sizeOfStack % 2 == 0) mid = sizeOfStack/2;
+        else mid = (sizeOfStack/2)+1;
+        
+        delMid(s, mid);
+    }
+};
