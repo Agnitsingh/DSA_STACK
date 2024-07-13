@@ -1,0 +1,37 @@
+void insertSrt(stack<int>&s, int data)
+{
+    if(s.empty())
+    {
+        s.push(data);
+        return;
+    }
+    
+    if(s.top()<data)
+    {
+        s.push(data);
+        return;
+    }
+    
+    int topEl = s.top();
+    s.pop();
+    insertSrt(s,data);
+    s.push(topEl);
+}
+
+void sortStack(stack<int> &s)
+{
+    if(s.empty())
+    {
+        return;
+    }
+    
+    int topVal = s.top();
+    s.pop();
+    sortStack(s);
+    insertSrt(s, topVal);
+}
+
+void SortedStack :: sort()
+{
+   sortStack(s);
+}
