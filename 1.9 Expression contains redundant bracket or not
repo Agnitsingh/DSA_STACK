@@ -1,0 +1,32 @@
+class Solution {
+  public:
+    int checkRedundancy(string s) {
+        stack<char> st;
+        
+        for(int i=0; i<s.length(); i++)
+        {
+            char ch = s[i];
+            
+            if(ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(')
+            {
+                st.push(ch);
+            }
+            
+            else if(ch == ')')
+            {
+                bool findOperator = false;
+                while(st.top() != '(')
+                {   
+                    findOperator = true;
+                    st.pop();
+                }
+                
+                st.pop();
+                if(findOperator == false) return 1;
+            }
+            
+        }
+        
+        return 0;
+    }
+};
