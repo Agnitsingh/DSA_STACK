@@ -1,0 +1,23 @@
+class Solution{
+public:
+    vector<int> leftSmaller(int n, int a[]){
+        vector<int> ans(n);
+        stack<int> st;
+        st.push(-1);
+        
+        for(int i=0; i<n; i++)
+        {
+            int curr = a[i];
+            while(st.top()>=curr)
+            {
+                st.pop();
+            }
+            ans[i] = st.top();
+            st.push(curr);
+        }
+        
+        return ans;
+    }
+};
+
+// Direction of Traversal Changes For Next Smaller Element (Right -> Left)
