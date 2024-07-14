@@ -1,0 +1,78 @@
+class Solution
+{
+    public:
+    //Function to find largest rectangular area possible in a given histogram.
+    
+    vector<long long> prevSmall(long long arr[], int n)
+    {
+        stack<long long> st;
+        st.push(-1);
+        vector<long long> prev(n);
+        
+        for(int i=0; i<n; i++)
+        {
+            long long curr = arr[i];
+            while(st.top()!= -1 && arr[st.top()]>=curr)
+            {
+                st.pop();
+            }
+            prev[i] = st.top();
+            st.push(i);
+        }
+        return prev;
+    }
+    
+    vector<long long> nextSmall(long long arr[], int n)
+    {
+        stack<long long> st;
+        st.push(-1);
+        vector<long long> next(n);
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            long long curr = arr[i];
+            while(st.top()!= -1 && arr[st.top()]>=curr)
+            {
+                st.pop();
+            }
+            next[i] = st.top();
+            st.push(i);
+        }
+        
+        for(int i=0; i<n; i++)
+        {
+            if(next[i] == -1)
+            {
+                next[i] = n;
+            }
+        }
+        
+        return next;
+    }
+    
+    long long getMaxArea(long long arr[], int n)
+    {
+        vector<long long> prevSmallerIndex = prevSmall(arr, n);
+        vector<long long> nextSmallerIndex = nextSmall(arr, n);
+        
+        // for(int i=0; i<n; i++)
+        // {
+        //     cout<<prevSmallerIndex[i];
+        // }
+        // cout<<"Agnit";
+        // for(int i=0; i<n; i++)
+        // {
+        //     cout<<nextSmallerIndex[i];
+        // }
+        
+        long long maxArea = 0;
+        for(int i=0; i<n; i++)
+        {
+            long long width = (nextSmallerIndex[i]-prevSmallerIndex[i]-1);
+            long long area = width*arr[i];
+            maxArea = max(area,maxArea);
+        }
+        
+        return maxArea;
+    }
+};
