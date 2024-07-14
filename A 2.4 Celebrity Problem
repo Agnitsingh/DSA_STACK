@@ -1,0 +1,64 @@
+class Solution 
+{
+    public:
+    //Function to find if there is a celebrity in the party or not.
+    int celebrity(vector<vector<int> >& M, int n) 
+    {
+        stack<int> st;
+        
+        // Add everyone in stack...
+        
+        for(int i=0; i<n; i++)
+        {
+            st.push(i);
+        }
+        
+        // Take Pair of 2 (Discard)
+        
+        while(st.size()!=1)
+        {
+            int p1 = st.top();
+            st.pop();
+            int p2 = st.top();
+            st.pop();
+            
+            if(M[p1][p2] == 1)
+            {
+                // p1 knows p2 -> p1 is not celeb
+                st.push(p2);
+            }
+            
+            else
+            {
+                st.push(p1);
+            }
+        }
+        
+        int possibleCeleb = st.top();
+        st.pop();
+        
+        // Confirm..
+        
+        // Knows No One
+        
+        for(int i=0; i<n; i++)
+        {
+            if(M[possibleCeleb][i] != 0)
+            {
+                return -1;
+            }
+        }
+        
+        // Everyone Knows
+        
+        for(int i=0; i<n; i++)
+        {
+            if(M[i][possibleCeleb] == 0 && i!=possibleCeleb)
+            {
+                return -1;
+            }
+        }
+        
+        return possibleCeleb;
+    }
+};
