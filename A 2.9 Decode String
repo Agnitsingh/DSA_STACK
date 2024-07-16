@@ -1,0 +1,55 @@
+class Solution{
+public:
+    string decodedString(string s){
+        stack<string> st;
+        
+        for(auto ch : s)
+        {
+            if(ch == ']')
+            {
+                string repeat = "";
+                while(!st.empty() && st.top()!="[")
+                {
+                    string add = st.top();
+                    repeat += add;
+                    st.pop();
+                }
+                
+                st.pop();
+                
+                string number = "";
+                
+                while(!st.empty() && isdigit(st.top()[0]))
+                {
+                    string numTop = st.top();
+                    number += numTop;
+                    st.pop();
+                }
+                
+                reverse(number.begin(),number.end());
+                int n = stoi(number);
+                
+                string addStack = "";
+                while(n--){
+                    addStack += repeat;
+                }
+                
+                st.push(addStack);
+            }
+            else{
+                string temp (1,ch);
+                st.push(temp);
+            }
+        }
+        
+        string add = "";
+        while(!st.empty()){
+            string top = st.top();
+            add = add+top;
+            st.pop();
+        }
+        
+        reverse(add.begin(),add.end());
+        return add;
+    }
+};
