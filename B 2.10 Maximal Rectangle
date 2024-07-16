@@ -1,0 +1,90 @@
+class Solution{
+  public:
+  
+    vector<int> prevSmallerElement(vector<int>& heights){
+        vector<int> answer1(heights.size());
+        stack<int> st;
+        st.push(-1);
+
+        for(int i=0; i<heights.size(); i++){
+            int curr = heights[i];
+            while(st.top()!=-1 && heights[st.top()]>=curr){
+                st.pop();
+            }
+            answer1[i] = st.top();
+            st.push(i);
+        }
+        return answer1;
+    }
+
+    vector<int> nextSmallerElement(vector<int>& heights){
+        vector<int> answer2(heights.size());
+        stack<int> st;
+        st.push(-1);
+
+        for(int i=heights.size()-1; i>=0; i--){
+            int curr = heights[i];
+            while(st.top()!=-1 && heights[st.top()]>=curr){
+                st.pop();
+            }
+            answer2[i] = st.top();
+            st.push(i);
+        }
+        return answer2;
+    }
+
+    int largestRectangleArea(vector<int>& heights) {
+        vector<int> previous = prevSmallerElement(heights);
+        vector<int> next = nextSmallerElement(heights);
+        int size = heights.size();
+        int maxArea = INT_MIN;
+
+        for(int i=0; i<heights.size(); i++){
+            int length = heights[i];
+
+            if(next[i] == -1){
+                next[i] = size;
+            }
+
+            int width = next[i] - previous[i] - 1;
+            int area = length*width;
+            maxArea = max(area,maxArea);
+        }
+        return maxArea;
+    }  
+  
+    int maxArea(int M[MAX][MAX], int n, int m) {
+        vector<int> temp;
+        for(int i=0; i<m; i++)
+        {
+            temp.push_back(M[0][i]);
+        }
+        
+        int maxi = largestRectangleArea(temp);
+        
+        for(int i=1; i<n; i++)
+        {   
+            vector<int> use;
+            for(int j=0; j<m; j++)
+            {
+                if(M[i][j] == 1)
+                {
+                    M[i][j] = M[i][j] + M[i-1][j];
+                }
+                else
+                {
+                    M[i][j] = 0;
+                }
+                
+                use.push_back(M[i][j]);
+            }
+            
+            int ans = largestRectangleArea(use);
+            maxi = max(maxi,ans);
+            
+        }
+        
+        return maxi;
+        
+    }
+};
