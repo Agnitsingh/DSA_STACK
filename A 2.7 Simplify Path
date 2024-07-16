@@ -1,0 +1,49 @@
+class Solution {
+public:
+
+    void buildAns(stack<string> &st, string &ans)
+    {
+        if(st.empty()) return;
+
+        string topEl = st.top();
+        st.pop();
+        buildAns(st,ans);
+        ans = ans+topEl;
+    }
+
+    string simplifyPath(string path) {
+        stack<string> st;
+        int index = 0;
+
+        while(index<path.length())
+        {
+            int start = index;
+            int end = start+1;
+
+            while(end<path.size() && path[end]!='/')
+            {
+                end = end+1;
+            }
+            index = end;
+            string mini = path.substr(start,end-start);
+
+            if(mini == "/" || mini == "/.") continue;
+            if(mini == "/..")
+            {
+                if(!st.empty())
+                {
+                    st.pop();
+                }
+            } 
+            else{
+                st.push(mini);
+            }
+        }
+
+        if(st.empty()) return "/";
+
+        string ans = "";
+        buildAns(st,ans);
+        return ans;
+    }
+};
